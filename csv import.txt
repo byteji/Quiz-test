@@ -1,0 +1,89 @@
+<?php
+
+// ดึงเบส
+include_once 'dbConfig.php';
+//echo $_FILES['file']['type'] ;
+//exit;
+
+if(isset($_POST['importSubmit'])){
+    
+    // ประเภท type ที่อนุญาต                                  text/plain         application/vnd.ms-excel  
+    $csvMimes = array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv' );
+    
+
+
+    //  ตรวจสอบว่าไฟล์ที่เลือกเป็นไฟล์ CSV ใช่หรือป่าว
+    if(!empty($_FILES['file']['name']) && in_array ($_FILES['file']['type'],$csvMimes)){
+        
+        // หากไฟล์ถูกอัพโหลด
+        if(is_uploaded_file($_FILES['file']['tmp_name'])){
+            
+            // / เปิดไฟล์ CSV ที่อัปโหลดด้วยโหมดอ่านอย่างเดียว fopen
+            $csvFile = fopen($_FILES['file']['tmp_name'], 'r');
+            
+            
+            // ข้ามบรรทัดแรกของไฟล์
+            fgetcsv($csvFile);
+
+            
+            // แยก ข้อมูลจากไฟล์ CSV ทีละบรรทัด
+            while(($line = fgetcsv($csvFile)) !== FALSE){
+                //ข้อมูลแถว
+                $name   = $line[0];
+                $opens  = $line[1];
+                $closes = $line[2];
+                $status = $line[3];
+                
+                // ตรวจสอบว่าสมาชิกมีอยู่แล้วในฐานข้อมูล
+                  $prevQuery = " SELECT id FROM members
+
+                    WHERE opens  = '".$line[1]."' "  ;
+                    
+
+                        
+
+
+                
+                 //$prevQuery = ("SELECT id FROM members WHERE opens > '".$line[1].'" AND  opens > '".$line[2].'") OR ( close < '".$line[1].'" and close  < '".$line[2].'"");
+                                      
+                                           // (AND  OR  AND)   OR  (AND OR AND)
+                      //    SELECT * FROM members  WHERE (DT1> DB1 AND DT1 < DB2 OR DT2 > DB1 AND DT2 < DB2  ) OR (DB1 > DT1 AND DB1 <  DT2 OR DB2 > DT1 AND DB2 < DT2) 
+
+                  
+
+                $prevResult = $db->query($prevQuery);
+                
+
+                if($prevResult->num_rows > 0){
+                    // Update data in the database ถ้ามีอยู่  //  เวลาปิด()              สถานะ(สถานะ),     เวลา(ที่แก้ไขเป็นเวลาล่าสุดnowเรียลทาม)   WHERE   เวลาเปิด()
+                    $db->query("UPDATE members  SET   status = '".$status."', modified = NOW() WHERE opens  = '".$opens."' , closes = '".$close."' "  );
+                }else{
+                    // Insert  data in the database // ชื่อห้อง , เวลาเปิด , เวลาปิด ,เช้ค(เวลาเข้า) ,เวลา(ที่แก้ไข), สถานะ(สถานะ)  VALUES  ชื่อ , เวลาเปิด , เวลาปิด ,เช้ค(เวลาเข้า) ,เวลา(ที่แก้ไข), สถานะ(สถานะ)  
+                    $db->query("INSERT INTO members (name, opens, closes, created, modified, status) VALUES ('".$name."', '".$opens."', '".$closes."', NOW(), NOW(), '".$status."')");
+                }
+            }
+
+          
+            
+            
+            // ปิดไฟล์ CSV ที่ได้รับอนุญาต
+            fclose($csvFile);
+            
+            
+            $qstring = '?status=succ';
+        }else{
+            $qstring = '?status=err';
+        }
+    }else{
+        $qstring = '?status=invalid_file';
+    }
+}
+
+// รีหน้าไปหน้าแรก
+header("Location: index.php".$qstring);
+
+
+
+
+	
+?>

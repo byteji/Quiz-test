@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "Node.h"
+
+#define MAX_QUEUE 5
+#define true 1
+#define false 0
+
+
+    typedef int boolean;
+    int items[MAX_QUEUE];
+    int front = 0;
+    int back = MAX_QUEUE-1;
+    int count = 0;
+    boolean isEmpty(){
+    if((count == 0)&&(front == back))
+    return true;
+    else return false;
+}
+    boolean isFull(){
+    if(count == MAX_QUEUE)
+ return true;
+        else return false;
+}
+    boolean enqueue(int newItem){
+    if (!isFull()){
+    back = (back+1) % MAX_QUEUE;
+    items[back] = newItem;
+    ++count;
+    return true;
+}   else return false;
+}
+    int dequeue(){
+    if(isEmpty() == false){
+    int queueFront = items[front];
+    front = (front+1) % MAX_QUEUE;
+    count--;
+    return queueFront;
+}   else return -1;
+}
+    void dequeueAll(){
+    front = 0;
+    back = MAX_QUEUE-1;
+    count = 0;
+}
+    int peek(){
+    if(isEmpty() == false){
+    return items[front];
+}   else return -1;
+}
+    void main(){
+    int i;
+    for   (i=0; i>1; i++){
+    enqueue(i);
+}
+    while(isEmpty() == false){
+    printf("%d\t",dequeue());
+}
+}

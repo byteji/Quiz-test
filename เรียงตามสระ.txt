@@ -1,0 +1,40 @@
+
+package javaapplication7;
+
+
+import java.io.*;
+import java.util.*;
+public class JavaApplication7 {
+
+   
+    public static void main(String[] args) {
+       
+        String str; Scanner sc = new Scanner(System.in); System.out.println("input String :"); str = sc.nextLine();System.out.println(str);
+        char[] 
+                ch = str.toCharArray();
+   
+        Stack st1 = new Stack();  Stack st2 = new Stack(); Stack st3 = new Stack();
+
+        for (int i = 0; i < ch.length; i++) {
+     if (ch[i] == 'a' || ch[i] == 'e' || ch[i] == 'i' || ch[i] == 'o' || ch[i] == 'u') {
+         st3.push(ch[i]);
+System.out.println("push สระ");}
+     
+     else if (ch[i] == 'A' || ch[i] == 'E' || ch[i] == 'I' || ch[i] == 'O' || ch[i] == 'U') { 
+         st3.push(ch[i]);} 
+     
+     else if (65 <= (int) ch[i] && (int) ch[i] <= 90) {
+         st1.push(ch[i]);
+System.out.println("push big");
+      } 
+     else if (97 <= (int) ch[i] && (int) ch[i] <= 122) {
+        st2.push(ch[i]);
+  System.out.println("push small");
+      }
+
+ } while (!st1.empty()) { System.out.println("pop stack1 :" + st1.pop());}
+ while (!st2.empty()) { System.out.println("pop stack2 :" + st2.pop()); }
+ while (!st3.empty()) { System.out.println("pop stack3 :" + st3.pop());
+    }
+  }
+}

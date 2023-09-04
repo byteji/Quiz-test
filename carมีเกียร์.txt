@@ -1,0 +1,128 @@
+
+
+class Car {
+
+    private int v;
+    private int x;
+    private boolean gear;
+    private String brand;
+
+    Car(String brand) {
+
+        this.v = 0;
+        this.x = 0;
+        this.gear = true;
+        this.brand = brand;
+    }
+
+    public int getv() {
+        return v;
+    }
+
+    public void setv(int v) {
+        this.v = v;
+    }
+
+    public int getx() {
+        return x;
+    }
+
+    public void setx(int x) {
+        this.x = x;
+    }
+
+    public boolean isGear() {
+        return gear;
+    }
+
+    public void setGear(boolean gear) {
+        this.gear = gear;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public void Acceleration() {
+        this.v = this.v + 1;
+
+        if (this.gear) {
+            this.x = this.x + this.v;
+
+            System.out.println("Brand : " + this.brand + " " + "ความเร็ว(V): " + this.v + " " + "ตำแหน่ง(x): " + this.x);
+
+        } else {
+            this.x = this.x - this.v;
+            System.out.println("Brand : " + this.brand + " ความเร็ว(V): " + this.v + " " + "ตำแหน่ง(x): " + this.x);
+        }
+
+    }
+
+    public void Break() {
+        if (this.v > 0) {
+            this.v = this.v - 1;
+
+            System.out.println("Brand : " + this.brand + " " + "ความเร็ว(V): " + this.v + " " + "ตำแหน่ง(x): " + this.x);
+
+        } else {
+            if (this.v <= 0) {
+                System.out.println("car stop!!");
+                System.out.println("Brand : " + this.brand + " ความเร็ว(V): 0" + " " + "ตำแหน่ง(x):  " + this.x);
+            }
+        }
+    }
+
+    public void ChangeGear() {
+        if (this.v == 0) {
+            this.gear = !this.gear;
+            if (this.gear) {
+                System.out.println("Brand : " + this.brand + " " + "ความเร็ว(V): " + this.v + " " + "ตำแหน่ง(x): " + this.x + " " + "Gear" + "(D)");
+            } else {
+                System.out.println("Brand : " + this.brand + " " + "ความเร็ว(V): 0" + " " + "ตำแหน่ง(x): " + this.x + " " + "Gear" + "(R)");
+
+            }
+
+        }
+    }
+}
+
+public class Lab52 {
+    // ตำแหน่ง xคือจะเป็น x+vตามเ
+
+    public static void main(String[] args) {
+
+        Car[] myCar = new Car[5];
+        myCar[0] = new Car("Mitsubishi");
+        myCar[1] = new Car("Honda");
+        myCar[2] = new Car("Mazda");
+
+        myCar[1].Acceleration();
+        System.out.println("= = = = = = = = = = = = = = ");
+
+        myCar[1].Break();
+        System.out.println("= = = = = = = = = = = = = = ");
+        myCar[1].Break();
+        System.out.println("= = = = = = = = = = = = = = ");
+        myCar[1].Break();
+
+        myCar[1].ChangeGear();
+        System.out.println("= = = = = = = = = = = = = = ");
+
+        myCar[1].Acceleration();
+        System.out.println("= = = = = = = = = = = = = = ");
+        myCar[1].Acceleration();
+        System.out.println("= = = = = = = = = = = = = = ");
+        myCar[1].Acceleration();
+        System.out.println("= = = = = = = = = = = = = = ");
+        myCar[1].Acceleration();
+        System.out.println("= = = = = = = = = = = = = = ");
+        myCar[1].Break();
+        System.out.println("= = = = = = = = = = = = = = ");
+
+    }
+
+}

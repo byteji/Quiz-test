@@ -1,0 +1,31 @@
+package javaapplication6;
+
+import java.util.Random;
+import java.util.Scanner;
+import java.util.Arrays;
+
+public class JavaApplication6 {
+
+    public static void main(String[] args) {
+
+        System.out.print("ขนาดอาเรย์ :");
+
+        int num = new Scanner(System.in).nextInt();
+
+        String[] aa = new String[num > -1 ? num : 0];
+
+        Random rr = new Random();
+
+        for (int i = 0; i < aa.length; i++) {
+                 
+            aa[i] = Integer.toString(rr.nextInt(1000));
+        
+            if (i % 7 == 0) {
+                System.out.println(i);
+            }
+
+        }
+
+    }
+
+}

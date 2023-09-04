@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QE </title>
+</head>
+
+<style>
+  body {
+    padding-top: 50px
+  }
+</style>
+</head>
+
+<body>
+
+  <input type="text" id="text1"></input>
+
+  <input type="button" id="button1" value="Add" onclick="add_array();"></input>
+
+  <input type="button" id="button2" value="Display" onclick="display_array();"></input>
+
+  <div id="Result"></div>
+
+
+  <script type="text/javascript">
+    let x = 1;
+    let array = Array();
+
+    function add_array() {
+
+    
+
+      // array[x] = document.getElementById("text1").value;
+      var text = document.getElementById("text1").value;
+
+console.log(text);
+
+if(text==""){
+  
+
+alert("รับแต่ข้อความ");
+}else{
+
+  
+
+
+
+
+  if (x >= 5) alert("ข้อความครบแล้ว ");
+
+  else {  
+
+
+    array[x] = text;
+  
+    alert(` รับ:${array[x]} เป็นข้อความที่ ${x}`);
+    
+
+    x++;
+  }
+}
+//ที่เหลือก็แก่เอา เรื่อง array x มันเริ่มจาก 0
+     
+
+      document.getElementById("text1").value = "";
+    }
+
+    //-----------------------------------------------------------------
+    function display_array() {
+      let e = "<hr/>";
+
+
+
+      for (let y = 0; y < array.length - 1; y++) {
+
+
+        array.sort();
+
+        e += `ข้อความที่ ${y + 1} = ${array[y]}<br/>`;
+
+
+      }
+
+
+
+      document.getElementById("Result").innerHTML = e;
+    }
+
+
+  </script>
+
+
+
+
+
+
+</body>
+
+</html>
